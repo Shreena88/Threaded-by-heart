@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Threaded by Heart</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #FDF8F2;
+      color: #a4788e;
+    }
+
+    .navbar {
+      background-color: #f7cfdc;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo2 img {
+      max-height: 50px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding-left: 0;
+      margin: 10px 0;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #a4788e;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      font-size: 16px;
+    }
+
+    .nav-links li a:hover {
+      color: #b27d91;
+    }
+
+    .about-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 40px;
+      background: #fef4f7;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(184, 138, 154, 0.2);
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .about-container h1 {
+      font-size: 36px;
+      color: #a4788e;
+      margin-bottom: 20px;
+    }
+
+    .about-container p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #5a3d4f;
+    }
+
+    .about-image {
+      width: 220px;
+      height: 220px;
+      margin: 30px auto;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(125, 100, 115, 0.3);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+      }
+
+      .nav-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .about-container {
+        padding: 25px;
+        margin: 40px 20px;
+      }
+
+      .about-container h1 {
+        font-size: 28px;
+      }
+
+      .about-container p {
+        font-size: 16px;
+      }
+
+      .about-image {
+        width: 180px;
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-container {
+        padding: 20px;
+        margin: 30px 15px;
+      }
+
+      .about-container h1 {
+        font-size: 24px;
+      }
+
+      .about-container p {
+        font-size: 15px;
+      }
+
+      .about-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      .nav-links li a {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo2">
+      <img src="logo.png" alt="Threaded by Heart Logo" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="checkout.html">Checkout</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="about-container">
+    <div class="about-image">
+      <img src="mom.jpg" alt="My Mom - Founder" />
+    </div>
+    <h1>Meet the Heart Behind the Thread</h1>
+    <p>
+      "Threaded by Heart" is the soulful creation of my beloved mother, a passionate artisan who pours love and tradition into every handmade crochet piece. What began as a humble hobby in our cozy home soon blossomed into a heartfelt journey of creativity and joy.
+    </p>
+    <p>
+      With years of skill, patience, and an eye for detail, she crafts each item as a unique expression of warmth. From baby booties to gift items, her hands tell stories through thread. Her mission? To bring smiles and a touch of handmade magic into people's lives—one stitch at a time.
+    </p>
+    <p>
+      Every order is a personal touch. Every product is a labor of love. Thank you for supporting her dream and being a part of our story.
+    </p>
+  </div>
+
+</body>
+</html>

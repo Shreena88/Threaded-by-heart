@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<link lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shop - Threaded by Heart</title>
+  <style>
+    /* Reset */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color:#FDF8F2; /* soft cream */
+    color: #a4788e; /* main text color */
+    }
+        /* Navigation Bar */
+    .navbar {
+    background-color: #f7cfdc; /* soft pink */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 22px;
+    }
+
+    .nav-links li a {
+    text-decoration: none;
+    color: #a4788e;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s;
+    }
+
+    .nav-links li a:hover {
+    color: #b27d91;
+    }
+
+  /* Sidebar styling */
+.category-bar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hidden outside of viewport */
+  width: 220px;
+  height: 100vh;
+  background-color: #f9f9f9;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  padding: 20px 10px;
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Sidebar visible when active */
+.category-bar.active {
+  left: 0; /* Slide in */
+}
+
+      /* Hamburger toggle button */
+      .sidebar-toggle {
+        position: fixed;
+        top: 9px;
+        left: 10px;
+        background: #d48e9d;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10000;
+        border-radius: 4px;
+      }
+
+      /* Optional: Adjust page content margin when sidebar is open */
+      .content.sidebar-open {
+        margin-left: 200px;
+        transition: margin-left 0.3s ease;
+      }
+
+      /* For smaller screens, you can hide sidebar by default or tweak as needed */
+      @media (max-width: 768px) {
+        .category-bar {
+          width: 200px;
+        }
+      }
+
+
+  .category-btn {
+      padding: 10px 20px;
+      border: none;
+      background-color: #d9a3b3;
+      color: #fff9f3;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background-color: #b27d91;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 40px;
+      padding: 20px;
+    }
+
+    .product-item {
+      background: linear-gradient(145deg, #ffe6ef, #f9dbe4);
+      border: 2px solid #e5aab8;
+      border-radius: 16px;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(224, 130, 150, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: visible;
+      width: 115%;
+    }
+
+
+    .product-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+
+    .product-item p {
+      margin-top: 12px;
+      color: #633444;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+  .product-info-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;           
+    max-width: 700px;     
+    height: auto;         
+    background: #fff;
+    border: 2px solid #e5aab8;
+    border-radius: 12px;
+    padding: 30px;        /* More padding for a spacious look */
+    z-index: 1000;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    font-size: 1.1rem;
+    }
+
+  .product-info-card img {
+    display: block;
+    max-width: 100%;
+    max-height: 50vh;       /* Prevents image from exceeding screen height */
+    width: auto;
+    height: auto;
+    object-fit: contain;    /* Maintains aspect ratio, no cropping */
+    margin: 0 auto;         /* Centers the image horizontally */
+    padding: 10px;          /* Space around image inside the card */
+    box-sizing: border-box;
+    cursor: zoom-in; /* Optional: show zoom cursor */
+    transition: transform 0.3s ease; /* Smooth zoom effect */
+    border-radius: 20px; /* Curl effect */
+  }
+
+  .product-info-card img:hover {
+    transform: scale(1.2); /* Scale image up on hover */
+  }
+
+  .product-info-card p{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2px;
+  margin-bottom: 9px;
+  line-height: 1.4;
+
+  }
+  .add-to-cart-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #b27d91;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  .add-to-cart-btn:hover {
+    background-color: #e5aab8;
+  }
+
+ .view-details-btn {
+  padding: 10px 15px;
+  background-color: #fff9f3;
+  color: #b27d91;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.view-details-btn:hover {
+  background-color: white;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+  .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 26px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.close-btn:hover {
+  color: #b27d91; /* Red hover for emphasis */
+}
+.logo2 img {
+  max-height: 50px;
+  width: auto;
+  display: flex;
+  margin-left: 39px; /* adjust as needed */
+}
+  </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle Categories">
+          &#9776; <!-- hamburger icon -->
+        </button>
+    <div class="logo2">
+      <img src="logo.png" alt="Threaded by Heart Logo">
+    </div>
+  <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="checkout.html">Checkout</a></li>     
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="category-bar">
+    <button class="category-btn active" data-category="all">All</button>
+    <button class="category-btn" data-category="children">Children</button>
+    <button class="category-btn" data-category="toys">Toys</button>
+    <button class="category-btn" data-category="bags">Bags</button>
+    <button class="category-btn" data-category="clothes">Clothes</button>
+    <button class="category-btn" data-category="accessories">Accessories</button>
+    <button class="category-btn" data-category="Gift items">Gift items</button>
+  </div>
+
+<div class="product-grid">
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (1).jpg" alt="Woolen yarn cord 1">
+    <p>Woolen yarn cord 1</p>
+      <!-- View Details Button -->
+  <button class="view-details-btn">View Details</button>
+
+      <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (1).jpg" alt="Woolen yarn cord 1" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (2).jpg" alt="cradle decor set">
+    <p>cradle decor set</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (2).jpg" alt="cradle decor set" class="product-img">
+        <p><strong>Description:</strong>A beautifully handcrafted cradle set featuring a strong woolen yarn cord designed for cradle support, paired with adorable crocheted toys that hang gently to entertain and soothe your baby.</p>
+        <p><strong>Complete Set:</strong>Crochet cradle hooks + crochet toy</p>
+        <p><strong>Price:</strong>₹1500</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (3).jpg" alt="Cradle Crochet toy-1">
+    <p>Cradle Crochet toy-1</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (3).jpg" alt="Cradle Crochet toy-1" class="product-img">
+        <p><strong>Description:</strong>A soft, handcrafted crochet toy made with baby-safe yarn—perfect for little hands to hold, cuddle, and play with.</p>
+        <p><strong>Material:</strong> 100% cotton yarn</p>
+        <p><strong>Washable:</strong>Yes</p>
+        <p><strong>Safety:</strong> No small parts, securely stitched</p>
+        <p><strong>Price:</strong> ₹750</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (4).jpg" alt="Woolen yarn cord-2">
+    <p>Woolen yarn cord-2</p>
+      <!-- View Details Button -->
+  <button class="view-details-btn">View Details</button>
+
+      <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (4).jpg" alt="Woolen yarn cord-2" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (5).jpg" alt="Woolen yarn cord-3">
+    <p>Woolen yarn cord-3</p>
+      <!-- View Details Button -->
+  <button class="view-details-btn">View Details</button>
+
+      <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (5).jpg" alt="Woolen yarn cord-3" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (6).jpg" alt="Woolen yarn cord-4">
+    <p>Woolen yarn cord-4</p>
+      <!-- View Details Button -->
+  <button class="view-details-btn">View Details</button>
+
+      <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (6).jpg" alt="Woolen yarn cord-4" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (7).jpg" alt="Woolen yarn cord-5">
+    <p>Woolen yarn cord-5</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (7).jpg" alt="woolen cord-5" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (8).jpg" alt="Woolen yarn cord-6">
+    <p>Woolen yarn cord-6</p>
+<button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (8).jpg" alt="Woolen yarn cord-6" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1600</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (9).jpg" alt="Cradle crochet toy-2">
+    <p>Cradle crochet toy-2</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (9).jpg" alt="Cradle crochet toy-2" class="product-img">
+        <p><strong>Description:</strong>A soft, handcrafted crochet toy made with baby-safe yarn—perfect for little hands to hold, cuddle, and play with.</p>
+        <p><strong>Material:</strong> 100% cotton yarn</p>
+        <p><strong>Washable:</strong>Yes</p>
+        <p><strong>Safety:</strong> No small parts, securely stitched</p>
+        <p><strong>Price:</strong> ₹750</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (10).jpg" alt="Woolen yarn cord-7">
+    <p>Woolen yarn cord-7</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (10).jpg" alt="Woolen yarn cord-7" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (12).jpg" alt="Woolen yarn cord-8">
+    <p>Woolen yarn code-8</p>
+            <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (12).jpg" alt="Woolen yarn code-8" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>3-3.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1300</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (13).jpg" alt="Cradle crochet toy-3">
+    <p>Cradle crochet toy-3</p>
+            <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (13).jpg" alt="Cradle crochet toy-3" class="product-img">
+        <p><strong>Description:</strong>A soft, handcrafted crochet toy made with baby-safe yarn—perfect for little hands to hold, cuddle, and play with.</p>
+        <p><strong>Material:</strong> 100% cotton yarn</p>
+        <p><strong>Washable:</strong>Yes</p>
+        <p><strong>Safety:</strong> No small parts, securely stitched</p>
+        <p><strong>Price:</strong> ₹750</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (14).jpg" alt="Woolen yarn cord-9">
+    <p>Woolen yarn cord-9</p>
+            <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (14).jpg" alt="Woolen yarn code-9" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (15).jpg" alt="Woolen yarn cord-10">
+    <p> Woolen yarn cords</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (15).jpg" alt="Woolen yarn cord-10" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted woolen cord for cradle support, made with baby-safe yarn and adorned with cute crocheted toys like fruits and vegetables.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Quentity:</strong>Two Woolen yarn cords</p>
+        <p><strong>Toys:</strong>You can add toys as per your requirement.</p>
+        <p><strong>Price:</strong>₹1800</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (16).jpg" alt="Woolen yarn cord-10">
+    <p>Woolen yarn cord-10</p>
+            <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (16).jpg" alt="Woolen yarn cord-10" class="product-img">
+        <p><strong>Description:</strong>Beautifully handcrafted simple woolen cord for cradle support, made with baby-safe yarn.</p>
+        <p><strong>Length:</strong>2.5meter</p>
+        <p><strong>Price:</strong>₹800</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="children">
+    <img src="products/children/child (17).jpg" alt="Chrochet shoes">
+    <p>Chrochet shoes</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/children/child (17).jpg" alt="Crochet shoes" class="product-img">
+        <p><strong>Description:</strong> Handmade crochet shoes offering warmth, comfort, and classic style for newborns and toddlers.</p>
+        <p><strong>Material:</strong> 100% cotton yarn</p>
+        <p><strong>Price:</strong> ₹650</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+
+  <!-------toys products------->
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (1).jpg" alt="Crochet Rabbit(Boy)">
+    <p>Crochet Rabbit(Boy)</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (1).jpg" alt="Crochet Rabbit(Boy)" class="product-img">
+        <p><strong>Description:</strong>Soft crochet rabbit doll in a blue dungaree—perfect for cuddles, playtime, or nursery décor.</p>
+        <p><strong>Price:</strong> ₹2000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (2).jpg" alt="Crochet rabbit(Girl)">
+    <p>Crochet rabbit(Girl)</p>
+     <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (2).jpg" alt="Crochet rabbit" class="product-img">
+        <p><strong>Description:</strong>Soft crochet girl rabbit doll in a pink dress—perfect for snuggles, gifting, or nursery décor.</p>
+        <p><strong>Price:</strong> ₹2000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (3).jpg" alt="Crochet doll">
+    <p>Crochet doll</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (3).jpg" alt="Crochet doll" class="product-img">
+        <p><strong>Description:</strong></p>Cute crochet doll wearing a yellow dress—ideal for playtime and decoration.
+        <p><strong>Price:</strong> ₹2000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (4).jpg" alt="Crochet Doll Duo – Boy & Girl Set">
+    <p>Crochet Doll Duo – Boy & Girl Set</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (4).jpg" alt="Crochet Doll Duo – Boy & Girl Set" class="product-img">
+        <p><strong>Description:</strong>Handcrafted crochet doll duo featuring a charming boy and girl pair. Dressed in colorful outfits, these soft, cuddly companions are perfect for gifting or imaginative play.</p>
+        <p><strong>Price:</strong> ₹3500</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (5).jpg" alt=" Crochet Toys set-1">
+    <p>Crochet Toys set-1</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (5).jpg" alt="Crochet toys set-1" class="product-img">
+        <p><strong>Description:</strong>Adorably handcrafted small crochet toys, perfect for little hands.</p>
+        <p><strong>Optional use:</strong>You can use these toys to make crochet woolen yarns, cradle hook decoration and for Keychains.</p>
+        <p><strong>Price:</strong> ₹500</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (6).jpg" alt="crochet toys set-2">
+    <p>Crochet toys set-2</p>
+
+      <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (6).jpg" alt="Crochet toys set-2" class="product-img">
+        <p><strong>Description:</strong>Adorably handcrafted small crochet toys, perfect for little hands.</p>
+        <p><strong>Optional use:</strong>You can use these toys to make crochet woolen yarns, cradle hook decoration and for Keychains.</p>
+        <p><strong>Price:</strong> ₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (7).jpg" alt="Crochet fairy">
+    <p>Crochet fairy doll</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (7).jpg" alt="Crochet fairy doll" class="product-img">
+        <p><strong>Description:</strong>Delicately handcrafted fairy doll with soft wings and intricate details. A charming companion for imaginative play or thoughtful gifting.</p>
+        <p><strong>Price:</strong> ₹2500</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="toys">
+    <img src="products/toys/ty (8).jpg" alt="Crochet Turtles">
+    <p>Crochet Turtles</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/toys/ty (8).jpg" alt="Crochet Turtles" class="product-img">
+        <p><strong>Description:</strong>Handcrafted crochet turtle featuring a soft and charming details. Perfect as a decorative keepsake,Keychains, toy, or thoughtful handmade gift.</p>
+        <p><strong>Price:</strong> ₹1000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+
+    <!------bags products------->
+  <div class="product-item" data-category="bags">
+    <img src="products/bags/bg (1).jpg" alt="Crochet Bag-1">
+    <p>Crochet Bag-1</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/bags/bg (1).jpg" alt="Crochet bag-1" class="product-img">
+        <p><strong>Description:</strong> Elegant handcrafted crochet bag adorned with delicate pearls and a striking red rose design.</p>
+        <p><strong>Price:</strong> ₹1750</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+    <div class="product-item" data-category="bags">
+    <img src="products/bags/bg (2).jpg" alt="Crochet Bag-2">
+    <p>Crochet Bag-2</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/bags/bg (2).jpg" alt="Crochet bag-2" class="product-img">
+        <p><strong>Description:</strong>handcrafted crochet bag featuring elegant pearl accents and a charming floral design. A stylish and unique accessory for everyday or special outings.</p>
+        <p><strong>Price:</strong> ₹2500</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="bags">
+    <img src="products/bags/bg (3).jpg" alt="Crochet Bag-3">
+    <p>Crochet Bag-3</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/bags/bg (3).jpg" alt="Crochet Bag-3" class="product-img">
+        <p><strong>Description:</strong> Off-white crochet bag featuring a handmade cherry accent. Lightweight, stylish, and perfect for adding a playful touch to your look.</p>
+        <p><strong>Price:</strong> ₹1750</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+
+  <!-----------clothes--------------->
+  <div class="product-item" data-category="clothes">
+    <img src="products/clothes/cl (1).jpg" alt="Krishna Idol Dress-1">
+    <p>Krishna Idol Dress-1</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/clothes/cl (1).jpg" alt="Krishna Idol Dress-1" class="product-img">
+        <p><strong>Description:</strong>Elegant and vibrant clothes designed for Lord Krishna idols, crafted with intricate detailing and traditional patterns to enhance devotional decor and celebrations.</p>
+        <p><strong>Price:</strong> ₹350</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+    <div class="product-item" data-category="clothes">
+    <img src="products/clothes/cl (1).png" alt="Krishna Idol Dress-2">
+    <p>Krishna Idol Dress-2</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/clothes/cl (1).png" alt="Child Product 1" class="product-img">
+        <p><strong>Description:</strong>Elegant and vibrant clothes designed for Lord Krishna idols, crafted with intricate detailing and traditional patterns to enhance devotional decor and celebrations.</p>
+        <p><strong>Price:</strong> ₹250</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="clothes">
+    <img src="products/clothes/cl (2).jpg" alt=" Crochet Dress for Girl">
+    <p>Crochet Dress for Girl</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/clothes/cl (2).jpg" alt="Crochet Dress for Girl" class="product-img">
+        <p><strong>Description:</strong>Handmade crochet dress for girls — comfortable, stylish, and perfect for any occasion.</p>
+        <p><strong>Size:</strong>for 1-2 yaers girl</p>
+        <p><strong>Price:</strong> ₹2000</p>
+        <p><strong>Please note that an increase in size will result in a corresponding increase in price.</strong></p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="clothes">
+    <img src="products/clothes/cl (3).jpg" alt="Hand-Knitted Baby Boy Vest(1)">
+    <p>Hand-Knitted Baby Boy Vest(1)</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/clothes/cl (3).jpg" alt="Hand-Knitted Baby Boy Vest(1)" class="product-img">
+        <p><strong>Description:</strong>Cozy hand-knitted vest for boys, featuring a classic button-down style and soft beige tones. Ideal for layering during cooler days</p>
+        <p><strong>Price:</strong> ₹2000</p>
+        <p><strong>Please note that an increase in size will result in a corresponding increase in price.</strong></p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="clothes">
+    <img src="products/clothes/cl (4).jpg" alt="Hand-Knitted Baby Boy Vest(2)">
+    <p>Hand-Knitted Baby Boy Vest(2)</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/clothes/cl (4).jpg" alt="Hand-Knitted Baby Boy Vest(2)" class="product-img">
+        <p><strong>Description:</strong>Cozy hand-knitted vest for boys, featuring a classic button-down style and soft beige tones. Ideal for layering during cooler days</p>
+        <p><strong>Price:</strong> ₹2000</p>
+        <p><strong>Please note that an increase in size will result in a corresponding increase in price.</strong></p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="clothes">
+    <img src="products/clothes/cl (5).jpg" alt="Krishna Idol Dress-3">
+    <p>Krishna Idol Dress-3</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/clothes/cl (5).jpg" alt="Krishna Idol Dress-3" class="product-img">
+        <p><strong>Description:</strong>Elegant and vibrant clothes designed for Lord Krishna idols, crafted with intricate detailing and traditional patterns to enhance devotional decor and celebrations.</p>
+        <p><strong>Price:</strong> ₹350</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+    <div class="product-item" data-category="clothes">
+    <img src="products/clothes/cl (6).jpg" alt="Crochet Outfit Set for Baby Girl">
+    <p>Crochet Outfit Set for Baby Girl</p>
+        <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/clothes/cl (6).jpg" alt="Crochet Outfit Set for Baby Girl" class="product-img">
+        <p><strong>Description:</strong>Adorable handmade crochet dress paired with matching booties. Soft, cozy, and perfect for special occasions or everyday charm.</p>
+        <p><strong>Size:</strong>for 1-2 years</p>
+        <p><strong>Price:</strong> ₹3000</p>
+        <p><strong>Please note that an increase in size will result in a corresponding increase in price.</strong></p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+<!--------accessories --------->
+  <div class="product-item" data-category="accessories">
+    <img src="products/accessories/ac (1).jpg" alt="Crochet Rakhi-1">
+    <p>Crochet Rakhi- 1</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/accessories/ac (1).jpg" alt="Crochet rakhi-1" class="product-img">
+        <p><strong>Description:</strong>Handcrafted crochet Rakhi designed with love and tradition. A soft, skin-friendly thread that adds a personal touch to your Raksha Bandhan celebration.</p>
+        <p><strong>Price:</strong> ₹240</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+    <div class="product-item" data-category="accessories">
+    <img src="products/accessories/ac (2).jpg" alt="Crochet Rakhi-2">
+    <p>Crochet Rakhi-2</p>
+      <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/accessories/ac (2).jpg" alt="Crochet Rakhi-2" class="product-img">
+        <p><strong>Description:</strong>Handcrafted crochet Rakhi designed with love and tradition. A soft, skin-friendly thread that adds a personal touch to your Raksha Bandhan celebration.</p>
+        <p><strong>Price:</strong> ₹240</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="accessories">
+    <img src="products/accessories/ac (3).jpg" alt="Crochet Earrings">
+    <p>Crochet Earrings</p>
+      <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/accessories/ac (3).jpg" alt="Crochet Earrings" class="product-img">
+        <p><strong>Description:</strong>Delicately handcrafted crochet earrings that blend charm with elegance — lightweight, stylish, and perfect for any occasion.</p>
+        <p><strong>Price:</strong> ₹150</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+
+  <!--------gift items --------->
+  <div class="product-item" data-category="Gift items">
+    <img src="products/gift/gt (1).jpg" alt="Crochet Flower Pot">
+    <p>Crochet Flower Pot</p>
+      <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/gift/gt (1).jpg" alt="Crochet Flower Pot" class="product-img">
+        <p><strong>Description:</strong>A charming handmade crochet flower pot that adds a touch of color and warmth to any space — a lasting bloom that never fades.</p>
+        <p><strong>Price:</strong> ₹850</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+    <div class="product-item" data-category="Gift items">
+    <img src="products/gift/gt (2).jpg" alt="Crochet Thali Rumal-1">
+    <p>Crochet Thali Rumal-1</p>
+      <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/gift/gt (2).jpg" alt="Crochet Thali Rumal-1" class="product-img">
+        <p><strong>Description:</strong></p>Delicately handcrafted crochet Thali Rumal adorned with intricate rose patterns — perfect for traditional rituals and festive decor.
+        <p><strong>Price:</strong> ₹2200</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="Gift items">
+    <img src="products/gift/gt (3).jpg" alt="Square-shaped Thali Rumal">
+    <p>Square Shaped Thali Rumal</p>
+      <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/gift/gt (3).jpg" alt="Square Shaped Thali Rumal" class="product-img">
+        <p><strong>Description:</strong>Square-shaped crochet Thali Rumal featuring elegant floral patterns and delicate pearl embellishments — ideal for festive rituals and traditional settings."</p>
+        <p><strong>Price:</strong> ₹2500</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="Gift items">
+    <img src="products/gift/gt (4).jpg" alt="Crochet Thali Rumal-2">
+    <p>Crochet Thali Rumal-2</p>
+      <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/gift/gt (4).jpg" alt="Crochet Thali Rumal-2" class="product-img">
+        <p><strong>Description:</strong>crochet Thali Rumal adorned with white and brown floral patterns, beautifully accented with pearls — perfect for traditional ceremonies.</p>
+        <p><strong>Price:</strong> ₹2000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+  <div class="product-item" data-category="Gift items">
+    <img src="products/gift/gt (5).jpg" alt="Crochet Thali Rumal-3">
+    <p>Crochet Thali Rumal-3</p>
+    <button class="view-details-btn">View Details</button>
+
+  <!-- Hidden product info card -->
+      <div class="product-info-card" style="display: none;">
+        <button class="close-btn">&times;</button>
+        <img src="products/gift/gt (5).jpg" alt="Crochet Thali Rumal-3" class="product-img">
+        <p><strong>Description:</strong> crochet Thali Rumal featuring an orange and white floral pattern, ideal for festive and traditional occasions.</p>
+        <p><strong>Price:</strong> ₹2000</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+  <script>
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const productItems = document.querySelectorAll('.product-item');
+
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Update active class
+      categoryButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      const category = button.getAttribute('data-category');
+
+      productItems.forEach(item => {
+        if (category === 'all' || item.getAttribute('data-category') === category) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Toggle product info card
+  const viewButtons = document.querySelectorAll('.view-details-btn');
+  viewButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.nextElementSibling;
+      card.style.display = 'block';
+    });
+  });
+
+  const closeButtons = document.querySelectorAll('.close-btn');
+  closeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.parentElement.style.display = 'none';
+    });
+  });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const sidebar = document.querySelector('.category-bar');
+  const content = document.querySelector('.content'); // your main content wrapper
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    if (content) {
+      content.classList.toggle('sidebar-open');
+    }
+  });
+
+  // Optional: Close sidebar when clicking outside
+  document.addEventListener('click', (e) => {
+    if (
+      sidebar.classList.contains('active') &&
+      !sidebar.contains(e.target) &&
+      e.target !== toggleBtn
+    ) {
+      sidebar.classList.remove('active');
+      if (content) {
+        content.classList.remove('sidebar-open');
+      }
+    }
+  });
+});
+  document.addEventListener('DOMContentLoaded', () => {
+  const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const productCard = button.closest('.product-info-card');
+      const productItem = button.closest('.product-item');
+
+      const title = productItem.querySelector('p').textContent.trim();
+      const image = productCard.querySelector('.product-img').getAttribute('src');
+      const category = productItem.getAttribute('data-category');
+
+      // Find the price paragraph by looking for the one containing "Price:"
+      const pricePara = Array.from(productCard.querySelectorAll('p')).find(p => p.textContent.includes('Price:'));
+      const priceText = pricePara.textContent;
+      const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+
+      // Quantity logic (for future expansion, can replace with dynamic quantity if needed)
+      const quantity = 1;
+
+      // Get existing cart from localStorage
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      // Check if item is already in cart
+      const existingItemIndex = cart.findIndex(item => item.title === title);
+
+      if (existingItemIndex >= 0) {
+        cart[existingItemIndex].quantity += quantity;
+      } else {
+        cart.push({ title, image, category, price, quantity });
+      }
+
+      // Store updated cart
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      alert(`${title} added to cart!`);
+    });
+  });
+});
+
+function addToCart(id, title, price, category, image) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Check if item already exists in cart
+    const existingItem = cart.find(item => item.id === id);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: id,
+            title: title,
+            price: price,
+            category: category,
+            image: image,
+            quantity: 1
+        });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Item added to cart!');
+}
+</script>
+</body>
+</html>

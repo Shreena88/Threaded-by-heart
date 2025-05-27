@@ -1,0 +1,79 @@
+[ 
+
+  {
+    "category": "children",
+    "products": [
+      { "name": "Child Product 1", "image": "children/child (1).jpg" },
+      { "name": "Child Product 2", "image": "children/child (2).jpg" },
+      { "name": "Child Product 3", "image": "children/child (3).jpg" },
+      { "name": "Child Product 4", "image": "children/child (4).jpg" },
+      { "name": "Child Product 5", "image": "children/child (5).jpg" },
+      { "name": "Child Product 6", "image": "children/child (6).jpg" },
+      { "name": "Child Product 7", "image": "children/child (7).jpg" },
+      { "name": "Child Product 8", "image": "children/child (8).jpg" },
+      { "name": "Child Product 9", "image": "children/child (9).jpg" },
+      { "name": "Child Product 10", "image": "children/child (10).jpg" },
+      { "name": "Child Product 11", "image": "children/child (11).jpg" },
+      { "name": "Child Product 12", "image": "children/child (12).jpg" },
+      { "name": "Child Product 13", "image": "children/child (13).jpg" },
+      { "name": "Child Product 14", "image": "children/child (14).jpg" },
+      { "name": "Child Product 15", "image": "children/child (15).jpg" },
+      { "name": "Child Product 16", "image": "children/child (16).jpg" },
+      { "name": "Child Product 16", "image": "children/child (17).jpg" }
+
+    ]
+  },
+  {
+    "category": "bags",
+    "products": [
+      { "name": "Bag Product 1", "image": "bags/bg (1).jpg" },
+      { "name": "Bag Product 2", "image": "bags/bg (2).jpg" },
+      { "name": "Bag Product 3", "image": "bags/bg (3).jpg" }
+    ]
+  },
+  {
+    "category": "accessories",
+    "products": [
+      { "name": "Accessory Product 1", "image": "accessories/ac (1).jpg" },
+      { "name": "Accessory Product 2", "image": "accessories/ac (2).jpg" },
+      { "name": "Accessory Product 3", "image": "accessories/ac (3).jpg" }
+    ]
+  },
+  {
+    "category": "clothes",
+    "products": [
+      { "name": "Clothes Product 1", "image": "clothes/cl (1).jpg" },
+      { "name": "Clothes Product 2", "image": "clothes/cl (1).png" },
+      { "name": "Clothes Product 3", "image": "clothes/cl (2).jpg" },
+      { "name": "Clothes Product 4", "image": "clothes/cl (3).jpg" },
+      { "name": "Clothes Product 5", "image": "clothes/cl (4).jpg" },
+      { "name": "Clothes Product 6", "image": "clothes/cl (5).jpg" },
+      { "name": "Clothes Product 6", "image": "clothes/cl (6).jpg" }
+
+    ]
+  },
+  {
+    "category": "Gift items",
+    "products": [
+      { "name": "Gift Product 1", "image": "Gift items/gt (1).jpg" },
+      { "name": "Gift Product 2", "image": "Gift items/gt (2).jpg" },
+      { "name": "Gift Product 3", "image": "Gift items/gt (3).jpg" },
+      { "name": "Gift Product 4", "image": "Gift items/gt (4).jpg" },
+      { "name": "Gift Product 5", "image": "Gift items/gt (5).jpg" }
+    ]
+  },
+  {
+    "category": "toys",
+    "products": [
+      { "name": "Toy Product 1", "image": "toys/ty (1).jpg" },
+      { "name": "Toy Product 2", "image": "toys/ty (2).jpg" },
+      { "name": "Toy Product 3", "image": "toys/ty (3).jpg" },
+      { "name": "Toy Product 4", "image": "toys/ty (4).jpg" },
+      { "name": "Toy Product 5", "image": "toys/ty (5).jpg" },
+      { "name": "Toy Product 6", "image": "toys/ty (6).jpg" },
+      { "name": "Toy Product 7", "image": "toys/ty (7).jpg" },
+      { "name": "Toy Product 8", "image": "toys/ty (8).jpg" }
+
+    ]
+  }
+]

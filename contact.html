@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact | Threaded by Heart</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #FDF8F2;
+      color: #a4788e;
+    }
+
+    .navbar {
+      background-color: #f7cfdc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo2 img { max-height: 50px; }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 22px;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #a4788e;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }   
+
+    .nav-links li a:hover {
+      color: #b27d91;
+    }
+
+    .contact-section {
+      padding: 50px 20px;
+      max-width: 800px;
+      margin: auto;
+      margin-top: 40px;
+    }
+
+    .contact-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #a4788e;
+    }
+
+    .contact-section p {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #b58395;
+    }
+
+    .contact-note {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #a4788e;
+      margin-bottom: 30px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+.contact-form input,
+.contact-form textarea {
+  padding: 15px;
+  border: 1px solid #f2c9d5;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: 'Segoe UI', sans-serif; /* Ensure input uses your main font */
+  background: #fffdfc;
+  color: #a4788e;
+  resize: vertical;
+}
+
+/* Placeholder style fix */
+::placeholder {
+  font-family: 'Segoe UI', sans-serif;
+  color: #c19bab;
+  font-size: 1rem;
+}
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: #e1a8bb;
+    }
+
+    .contact-form button {
+      padding: 12px;
+      background-color: #d9a3b3;
+      color: #fff9f3;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background-color: #c68ca2;
+    }
+
+    .direct-contact {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.95rem;
+      color: #a4788e;
+    }
+
+    .direct-contact span {
+      display: block;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .contact-section {
+    padding: 40px 15px;
+    min-height: 100vh; /* takes full screen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* vertical centering */
+  }
+
+  .contact-section h2 {
+    font-size: 2rem;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo2">
+      <img src="logo.png" alt="Threaded by Heart Logo">
+    </div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="checkout.html">Checkout</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <h2>Get in Touch</h2>
+    <p>We'd love to hear from you!</p>
+    <div class="contact-note">
+      This form is for general inquiries and messages.  
+      If you've placed an order, please use the contact information below for any updates or questions.
+    </div>
+    <form class="contact-form" id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="direct-contact">
+      Prefer direct contact? Reach us at:
+      <span>Instagram:@threaded_by_heart</span>
+      <span>Location:Suart,Gujarat</span>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        name: this.name.value.trim(),
+        email: this.email.value.trim(),
+        message: this.message.value.trim()
+      };
+
+      try {
+        const response = await fetch('http://localhost:5000/submit_contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          alert('Thank you for your message! We will get back to you soon.');
+          this.reset(); // Clear the form
+        } else {
+          alert('Error: ' + (data.message || 'Failed to send message. Please try again.'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to connect to server. Please try again later.');
+      }
+    });
+  </script>
+</body>
+</html>
