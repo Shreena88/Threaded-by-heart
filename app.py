@@ -1,17 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_cors import CORS
 import mysql.connector
 from datetime import datetime
+import json
+import os
 
 app = Flask(__name__)
-# Configure CORS to allow all origins and headers
-CORS(app, resources={
-    r"/*": {
-        "origins": "*",
-        "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"]
-    }
-})
+CORS(app)  # Enable CORS for all routes
 
 # DB connection with error handling
 try:
@@ -27,9 +22,43 @@ except mysql.connector.Error as err:
     print(f"Error connecting to database: {err}")
     exit(1)
 
+# Load products data
+def load_products():
+    with open('products.json', 'r') as f:
+        return json.load(f)
+
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/shop')
+def shop():
+    return render_template('shop.html')
+
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
+
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
+@app.route('/aboutus')
+def aboutus():
+    return render_template('aboutus.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/api/products')
+def get_products():
+    products = load_products()
+    return jsonify(products)
+
 # Test route to verify server is running
 @app.route('/', methods=['GET'])
-def home():
+def home_api():
     return jsonify({"message": "Server is running!"})
 
 # Insert test data
@@ -120,7 +149,7 @@ def get_categories():
 
 # Get all products
 @app.route('/products', methods=['GET'])
-def get_products():
+def get_products_api():
     if request.method != 'GET':
         return jsonify({"error": "Method not allowed. Use GET method."}), 405
     try:
@@ -154,6 +183,7 @@ def debug_products():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 @app.route('/categories', methods=['GET', 'PUT'])
 def categories():
     if request.method == 'GET':
@@ -355,4 +385,5 @@ def submit_contact():
         }), 500
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)

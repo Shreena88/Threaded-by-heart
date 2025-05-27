@@ -207,13 +207,13 @@
               <p>Price: ₹${price.toFixed(2)}</p>
               <div>
                 Quantity:
-                <button class="decrease-btn" data-index="₹{index}">−</button>
+                <button class="decrease-btn" data-index="${index}">−</button>
                 <span>${item.quantity}</span>
-                <button class="increase-btn" data-index="₹{index}">+</button>
+                <button class="increase-btn" data-index="${index}">+</button>
               </div>
             </div>
           </div>
-          <button class="remove-btn" data-index="₹{index}">&times;</button>
+          <button class="remove-btn" data-index="${index}">&times;</button>
         `;
 
         cartContainer.appendChild(itemDiv);
