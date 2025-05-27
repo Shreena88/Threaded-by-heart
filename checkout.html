@@ -484,20 +484,26 @@ document.getElementById("checkout-form").addEventListener("submit", async functi
     console.log("Formatted cart:", formattedCart);
 
     console.log("Sending request to server...");
-    const response = await fetch("http://localhost:5000/submit_order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        phone,
-        address,
-        note,
-        cart: formattedCart
-      })
-    });
+    // Add this at the start of your script
+    const API_BASE_URL = window.location.hostname === 'localhost' 
+        ? 'http://localhost:5000'
+        : 'https://your-render-backend-url.onrender.com';
+    
+    // Update your fetch calls
+    const response = await fetch(`${API_BASE_URL}/submit_order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          address,
+          note,
+          cart: formattedCart
+        })
+      });
 
     console.log("Response received:", response);
     const data = await response.json();
