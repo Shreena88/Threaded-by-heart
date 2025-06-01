@@ -28,7 +28,7 @@ This is a simple e-commerce website built with Flask. The website includes featu
 - HTML
 - CSS
 - JavaScript
-- JSON for data storage
+- MySQL
 
 ## Project Structure
 
@@ -36,4 +36,3 @@ This is a simple e-commerce website built with Flask. The website includes featu
 - `*.html` - HTML templates
 - `products.json` - Product data
 - `products/` - Product images
-- `static/` - Static assets (CSS, JS, images) 
