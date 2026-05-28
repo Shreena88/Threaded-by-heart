@@ -36,7 +36,9 @@
     "products": [
       { "name": "Accessory Product 1", "image": "accessories/ac (1).jpg" },
       { "name": "Accessory Product 2", "image": "accessories/ac (2).jpg" },
-      { "name": "Accessory Product 3", "image": "accessories/ac (3).jpg" }
+      { "name": "Accessory Product 3", "image": "accessories/ac (3).jpg" },
+      { "name": "Accessory Product 4", "image": "accessories/ac (4).jpg" }
+
     ]
   },
   {

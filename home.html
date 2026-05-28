@@ -2,215 +2,340 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Threaded by Heart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Reset */
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    :root {
+      --rose: #c9748a;
+      --rose-light: #f2c4ce;
+      --rose-pale: #fdf0f3;
+      --cream: #fdf8f2;
+      --text-dark: #3d2535;
+      --text-mid: #7a4f5e;
+      --text-light: #b08090;
+      --white: #ffffff;
+      --shadow: 0 8px 32px rgba(180,100,120,0.13);
     }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--text-dark); }
 
-    body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color:#FDF8F2; /* soft cream */
-    color: #a4788e; /* main text color */
-    }
-
-    #home {
-    position: relative;           /* Make it a reference point */
-    background-image: url('background.jpeg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    overflow: hidden;
-    }
-
-    /* Create the glass effect overlay */
-    #home::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255, 255, 255, 0.2);  /* Semi-transparent white */
-    backdrop-filter: blur(1.5px);            /* The blur for glass effect */
-    -webkit-backdrop-filter: blur(1.5px);    /* Safari support */
-    pointer-events: none;                    /* So it doesn't block clicks */
-    z-index: 0;                             /* Behind content */
-    }
-
-    /* Make sure your content inside #home is above the overlay */
-    #home > * {
-    position: relative;
-    z-index: 1;
-    }
-
-    /* Navigation Bar */
+    /* ── NAVBAR ── */
     .navbar {
-    background-color: #f7cfdc; /* soft pink */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 30px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      height: 70px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(180,100,120,0.08);
     }
-
-    .logo2 img {
-    max-height: 50px;
-    width: auto;
-    display: block;
-    }
-
-    .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 22px;
-    }
-
+    .logo2 img { height: 46px; }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 8px; }
     .nav-links li a {
-    text-decoration: none;
-    color: #a4788e;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: color 0.3s;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.25s;
+    }
+    .nav-links li a:hover { background: var(--rose-pale); color: var(--rose); }
+    .nav-links li a.active { background: var(--rose); color: var(--white); }
+    #authLink a {
+      background: var(--rose);
+      color: var(--white) !important;
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    #authLink a:hover { background: #b5607a !important; }
+    #authLink span { color: var(--text-mid); font-size: 0.85rem; }
+    .hamburger { display: none; background: none; border: none; font-size: 1.5rem; color: var(--rose); cursor: pointer; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background-image: url('background.jpeg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(253,240,243,0.82) 0%, rgba(253,248,242,0.75) 100%);
+      backdrop-filter: blur(2px);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      padding: 0 24px;
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--rose-light);
+      color: var(--rose);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero-content h1 span { color: var(--rose); }
+    .hero-content p {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--rose);
+      color: var(--white);
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 6px 20px rgba(180,100,120,0.3);
+    }
+    .btn-primary:hover { background: #b5607a; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(180,100,120,0.4); }
+    .btn-outline {
+      background: transparent;
+      color: var(--rose);
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 2px solid var(--rose);
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background: var(--rose); color: var(--white); transform: translateY(-2px); }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 80px 40px;
+      background: var(--white);
+    }
+    .section-header { text-align: center; margin-bottom: 50px; }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    .section-header p { color: var(--text-light); font-size: 1rem; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      text-align: center;
+      padding: 36px 24px;
+      border-radius: 16px;
+      background: var(--rose-pale);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .feature-icon {
+      width: 64px; height: 64px;
+      background: var(--rose-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 1.6rem;
+      color: var(--rose);
+    }
+    .feature-card h3 { font-size: 1.05rem; color: var(--text-dark); margin-bottom: 8px; font-weight: 600; }
+    .feature-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.6; }
+
+    /* ── CATEGORIES PREVIEW ── */
+    .categories-section { padding: 80px 40px; background: var(--cream); }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .cat-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px 16px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-dark);
+      box-shadow: 0 4px 16px rgba(180,100,120,0.07);
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    .cat-card:hover { border-color: var(--rose-light); transform: translateY(-4px); box-shadow: var(--shadow); }
+    .cat-icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .cat-card span { font-size: 0.9rem; font-weight: 600; color: var(--text-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text-dark);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.88rem;
+    }
+    footer a { color: var(--rose-light); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .nav-links li a:hover {
-    color: #b27d91;
-    }
-
-    /* Intro Section */
-    .intro-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    background-color: #fef4f7; /* soft off-pink background */
-    padding: 0 20px;
-    text-align: center;
-    }
-
-    .intro-content h1 {
-    font-size: 3rem;
-    color: #a4788e;
-    margin-bottom: 20px;
-    }
-
-    .intro-content p {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto 30px;
-    color: #a4788e;
-    }
-
-    .btn-shop {
-    text-decoration: none;
-    background-color: #d9a3b3; /* dusty rose */
-    color: #fff9f3; /* cream text */
-    padding: 12px 30px;
-    border-radius: 30px;
-    font-weight: bold;
-    transition: 0.3s;
-    }
-
-    .btn-shop:hover {
-    background-color: #c6a6b4;
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-    .nav-links {
-        flex-direction: column;
-        background: #f7cfdc;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
+      .navbar { padding: 0 20px; }
+      .hamburger { display: block; }
+      .nav-links {
         display: none;
-    }
-
-    .navbar {
         flex-direction: column;
-        align-items: flex-start;
+        position: absolute;
+        top: 70px; left: 0; right: 0;
+        background: var(--white);
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        gap: 4px;
+      }
+      .nav-links.open { display: flex; }
+      .features, .categories-section { padding: 50px 20px; }
     }
-
-    .nav-links.active {
-        display: flex;
-    }
-    }
-
   </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
   <nav class="navbar">
-    <div class="logo2">
-      <img src="logo.png" alt="Threaded by Heart Logo">
-    </div>
+    <div class="logo2"><img src="logo.png" alt="Threaded by Heart"></div>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <i class="fas fa-bars"></i>
+    </button>
     <ul class="nav-links">
-      <li><a href="home.html">Home</a></li>
+      <li><a href="home.html" class="active">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
-      <li><a href="cart.html">Cart</a></li>
-      <li><a href="checkout.html">Checkout</a></li>     
+      <li><a href="cart.html"><i class="fas fa-shopping-bag"></i> Cart</a></li>
       <li><a href="aboutus.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li id="authLink"><a href="login.html">Login</a></li>
     </ul>
   </nav>
 
-  <!-- Introduction Section -->
-  <section id="home" class="intro-section">
-    <div class="intro-content">
-      <h1>Threaded by Heart</h1>
-      <p>Soft. Simple. Sincere. <br>
-      Discover handmade crochet pieces crafted with love, care, and warmth — designed to bring joy, comfort, and charm to your life.</p>
-      <a href="#shop" class="btn-shop">Shop Now</a>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✦ Handmade with Love</div>
+      <h1>Threaded<br>by <span>Heart</span></h1>
+      <p>Discover handcrafted crochet pieces made with love, care, and warmth — bringing joy, comfort, and charm to your everyday life.</p>
+      <div class="hero-btns">
+        <a href="shop.html" class="btn-primary">Shop Now</a>
+        <a href="aboutus.html" class="btn-outline">Our Story</a>
+      </div>
     </div>
   </section>
 
-      <!-- Add more products as needed -->
+  <!-- Features -->
+  <section class="features">
+    <div class="section-header">
+      <h2>Why Choose Us</h2>
+      <p>Every piece is made with intention and care</p>
     </div>
-    <script>
-        // Mobile menu toggle (optional, future-ready)
-    document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelector('.nav-links');
-    const menuToggle = document.querySelector('.menu-toggle'); // If you add a hamburger icon later
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-heart"></i></div>
+        <h3>Handmade with Love</h3>
+        <p>Each item is carefully crafted by hand, making every piece truly unique.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+        <h3>Baby-Safe Materials</h3>
+        <p>We use 100% cotton and baby-safe yarn for all our children's products.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-gift"></i></div>
+        <h3>Perfect for Gifting</h3>
+        <p>Thoughtful handmade gifts that carry warmth and personal touch.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Secure Payments</h3>
+        <p>Pay safely via UPI, cards, net banking, or wallets — all in ₹ INR.</p>
+      </div>
+    </div>
+  </section>
 
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        });
+  <!-- Categories -->
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>Shop by Category</h2>
+      <p>Find something special for everyone</p>
+    </div>
+    <div class="categories-grid">
+      <a href="shop.html" class="cat-card"><div class="cat-icon">🧸</div><span>Children</span></a>
+      <a href="shop.html" class="cat-card"><div class="cat-icon">🪆</div><span>Toys</span></a>
+      <a href="shop.html" class="cat-card"><div class="cat-icon">👜</div><span>Bags</span></a>
+      <a href="shop.html" class="cat-card"><div class="cat-icon">👗</div><span>Clothes</span></a>
+      <a href="shop.html" class="cat-card"><div class="cat-icon">💍</div><span>Accessories</span></a>
+      <a href="shop.html" class="cat-card"><div class="cat-icon">🎁</div><span>Gift Items</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Threaded by Heart · Made with ❤️ in Surat, Gujarat · <a href="contact.html">Contact Us</a></p>
+  </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      checkAuthStatus();
+    });
+
+    function checkAuthStatus() {
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      const authLink = document.getElementById('authLink');
+      if (user) {
+        authLink.innerHTML = `<span>Hi, ${user.name.split(' ')[0]}!</span> <a href="#" onclick="logout()">Logout</a>`;
+      } else {
+        authLink.innerHTML = '<a href="login.html">Login</a>';
+      }
     }
-    });
 
-    // Smooth scroll for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const section = document.querySelector(this.getAttribute('href'));
-        if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-    });
-
-    // Redirect to shop.html when "Shop Now" button is clicked
-    const shopNowBtn = document.querySelector('.btn-shop');
-    if (shopNowBtn) {
-    shopNowBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = 'shop.html';
-    });
+    async function logout() {
+      try {
+        await fetch('http://localhost:5000/logout', { method: 'POST', credentials: 'include' });
+      } catch(e) {}
+      localStorage.removeItem('user');
+      localStorage.removeItem('cart');
+      window.location.reload();
     }
-  window.addEventListener('DOMContentLoaded', () => {
-    localStorage.removeItem('cart'); // clears cart when entering home page
-  });
-
-    </script>
+  </script>
 </body>
 </html>

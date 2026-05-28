@@ -1,192 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us - Threaded by Heart</title>
+  <title>About Us – Threaded by Heart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #FDF8F2;
-      color: #a4788e;
+    :root {
+      --rose: #c9748a; --rose-light: #f2c4ce; --rose-pale: #fdf0f3;
+      --cream: #fdf8f2; --text-dark: #3d2535; --text-mid: #7a4f5e;
+      --text-light: #b08090; --white: #ffffff;
+      --shadow: 0 8px 32px rgba(180,100,120,0.13);
     }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--text-dark); }
 
     .navbar {
-      background-color: #f7cfdc;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 30px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      background: var(--white); display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 70px; position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 20px rgba(180,100,120,0.08);
     }
-
-    .logo2 img {
-      max-height: 50px;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      padding-left: 0;
-      margin: 10px 0;
-    }
-
+    .logo2 img { height: 46px; }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 8px; }
     .nav-links li a {
-      text-decoration: none;
-      color: #a4788e;
-      font-weight: 600;
-      transition: color 0.3s ease;
-      font-size: 16px;
+      text-decoration: none; color: var(--text-mid); font-weight: 500;
+      font-size: 0.9rem; padding: 6px 14px; border-radius: 20px; transition: all 0.25s;
+    }
+    .nav-links li a:hover { background: var(--rose-pale); color: var(--rose); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.5rem; color: var(--rose); cursor: pointer; }
+
+    .hero-about {
+      background: linear-gradient(135deg, var(--rose) 0%, #b5607a 100%);
+      padding: 80px 40px; text-align: center; color: var(--white);
+    }
+    .hero-about h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; margin-bottom: 12px; }
+    .hero-about p { opacity: 0.85; font-size: 1rem; max-width: 500px; margin: 0 auto; }
+
+    .about-main {
+      max-width: 900px; margin: 60px auto; padding: 0 24px;
     }
 
-    .nav-links li a:hover {
-      color: #b27d91;
+    .founder-card {
+      background: var(--white); border-radius: 24px; box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 260px 1fr; overflow: hidden; margin-bottom: 40px;
     }
+    .founder-img-wrap { background: var(--rose-pale); display: flex; align-items: center; justify-content: center; padding: 40px 30px; }
+    .founder-img-wrap img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid var(--rose-light); box-shadow: 0 8px 24px rgba(180,100,120,0.2); }
+    .founder-text { padding: 40px; }
+    .founder-text .badge { display: inline-block; background: var(--rose-pale); color: var(--rose); font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; }
+    .founder-text h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--text-dark); margin-bottom: 16px; }
+    .founder-text p { color: var(--text-mid); line-height: 1.8; font-size: 0.95rem; margin-bottom: 14px; }
 
-    .about-container {
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 40px;
-      background: #fef4f7;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(184, 138, 154, 0.2);
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .value-card { background: var(--white); border-radius: 16px; padding: 28px 20px; text-align: center; box-shadow: 0 4px 16px rgba(180,100,120,0.07); }
+    .value-icon { font-size: 2rem; margin-bottom: 12px; }
+    .value-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+    .value-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
 
-    .about-container h1 {
-      font-size: 36px;
-      color: #a4788e;
-      margin-bottom: 20px;
-    }
+    .cta-section { background: linear-gradient(135deg, var(--rose) 0%, #b5607a 100%); border-radius: 20px; padding: 50px 40px; text-align: center; color: var(--white); }
+    .cta-section h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 12px; }
+    .cta-section p { opacity: 0.85; margin-bottom: 28px; }
+    .btn-cta { background: var(--white); color: var(--rose); padding: 13px 36px; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.3s; display: inline-block; }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
 
-    .about-container p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #5a3d4f;
-    }
+    footer { background: var(--text-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 30px 20px; font-size: 0.88rem; margin-top: 60px; }
+    footer a { color: var(--rose-light); text-decoration: none; }
 
-    .about-image {
-      width: 220px;
-      height: 220px;
-      margin: 30px auto;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 6px 15px rgba(125, 100, 115, 0.3);
-    }
-
-    .about-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive styles */
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px;
-      }
-
-      .nav-links {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
-      }
-
-      .about-container {
-        padding: 25px;
-        margin: 40px 20px;
-      }
-
-      .about-container h1 {
-        font-size: 28px;
-      }
-
-      .about-container p {
-        font-size: 16px;
-      }
-
-      .about-image {
-        width: 180px;
-        height: 180px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .about-container {
-        padding: 20px;
-        margin: 30px 15px;
-      }
-
-      .about-container h1 {
-        font-size: 24px;
-      }
-
-      .about-container p {
-        font-size: 15px;
-      }
-
-      .about-image {
-        width: 150px;
-        height: 150px;
-      }
-
-      .nav-links li a {
-        font-size: 14px;
-      }
+    @media (max-width: 700px) {
+      .founder-card { grid-template-columns: 1fr; }
+      .founder-img-wrap { padding: 30px; }
+      .founder-text { padding: 28px; }
+      .navbar { padding: 0 20px; }
+      .hamburger { display: block; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: var(--white); padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); gap: 4px; }
+      .nav-links.open { display: flex; }
     }
   </style>
 </head>
 <body>
-
   <nav class="navbar">
-    <div class="logo2">
-      <img src="logo.png" alt="Threaded by Heart Logo" />
-    </div>
+    <div class="logo2"><img src="logo.png" alt="Threaded by Heart"></div>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <i class="fas fa-bars"></i>
+    </button>
     <ul class="nav-links">
       <li><a href="home.html">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
-      <li><a href="cart.html">Cart</a></li>
-      <li><a href="checkout.html">Checkout</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-bag"></i> Cart</a></li>
       <li><a href="aboutus.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <div class="about-container">
-    <div class="about-image">
-      <img src="mom.jpg" alt="My Mom - Founder" />
-    </div>
-    <h1>Meet the Heart Behind the Thread</h1>
-    <p>
-      "Threaded by Heart" is the soulful creation of my beloved mother, a passionate artisan who pours love and tradition into every handmade crochet piece. What began as a humble hobby in our cozy home soon blossomed into a heartfelt journey of creativity and joy.
-    </p>
-    <p>
-      With years of skill, patience, and an eye for detail, she crafts each item as a unique expression of warmth. From baby booties to gift items, her hands tell stories through thread. Her mission? To bring smiles and a touch of handmade magic into people's lives—one stitch at a time.
-    </p>
-    <p>
-      Every order is a personal touch. Every product is a labor of love. Thank you for supporting her dream and being a part of our story.
-    </p>
+  <div class="hero-about">
+    <h1>Our Story</h1>
+    <p>The heart and hands behind every stitch</p>
   </div>
 
+  <div class="about-main">
+    <div class="founder-card">
+      <div class="founder-img-wrap">
+        <img src="mom.jpg" alt="Founder - Threaded by Heart">
+      </div>
+      <div class="founder-text">
+        <span class="badge">✦ Founder</span>
+        <h2>Meet the Heart Behind the Thread</h2>
+        <p>"Threaded by Heart" is the soulful creation of my beloved mother — a passionate artisan who pours love and tradition into every handmade crochet piece. What began as a humble hobby in our cozy home soon blossomed into a heartfelt journey of creativity and joy.</p>
+        <p>With years of skill, patience, and an eye for detail, she crafts each item as a unique expression of warmth. From baby cradle cords to gift items, her hands tell stories through thread.</p>
+        <p>Her mission? To bring smiles and a touch of handmade magic into people's lives — one stitch at a time.</p>
+      </div>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card"><div class="value-icon">🧶</div><h4>Handcrafted</h4><p>Every piece is made entirely by hand with care and precision.</p></div>
+      <div class="value-card"><div class="value-icon">💛</div><h4>Made with Love</h4><p>Each item carries warmth and personal attention to detail.</p></div>
+      <div class="value-card"><div class="value-icon">🌿</div><h4>Safe Materials</h4><p>Baby-safe, skin-friendly yarn used in all our products.</p></div>
+      <div class="value-card"><div class="value-icon">🎁</div><h4>Thoughtful Gifts</h4><p>Perfect for gifting — unique, personal, and full of heart.</p></div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Ready to Find Something Special?</h2>
+      <p>Browse our handmade collection and bring a little warmth home.</p>
+      <a href="shop.html" class="btn-cta">Shop Now</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Threaded by Heart · Made with ❤️ in Surat, Gujarat · <a href="contact.html">Contact Us</a></p>
+  </footer>
 </body>
 </html>

@@ -2,230 +2,213 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Contact | Threaded by Heart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact – Threaded by Heart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #FDF8F2;
-      color: #a4788e;
+    :root {
+      --rose: #c9748a; --rose-light: #f2c4ce; --rose-pale: #fdf0f3;
+      --cream: #fdf8f2; --text-dark: #3d2535; --text-mid: #7a4f5e;
+      --text-light: #b08090; --white: #ffffff;
+      --shadow: 0 8px 32px rgba(180,100,120,0.13);
     }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--text-dark); }
 
     .navbar {
-      background-color: #f7cfdc;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 30px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      background: var(--white); display: flex; justify-content: space-between;
+      align-items: center; padding: 0 40px; height: 70px; position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 20px rgba(180,100,120,0.08);
     }
-
-    .logo2 img { max-height: 50px; }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 22px;
-    }
-
+    .logo2 img { height: 46px; }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 8px; }
     .nav-links li a {
-      text-decoration: none;
-      color: #a4788e;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: color 0.3s;
-    }   
+      text-decoration: none; color: var(--text-mid); font-weight: 500;
+      font-size: 0.9rem; padding: 6px 14px; border-radius: 20px; transition: all 0.25s;
+    }
+    .nav-links li a:hover { background: var(--rose-pale); color: var(--rose); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.5rem; color: var(--rose); cursor: pointer; }
 
-    .nav-links li a:hover {
-      color: #b27d91;
+    .page-header {
+      background: linear-gradient(135deg, var(--rose) 0%, #b5607a 100%);
+      padding: 60px 40px; text-align: center; color: var(--white);
+    }
+    .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin-bottom: 10px; }
+    .page-header p { opacity: 0.85; font-size: 1rem; }
+
+    .contact-wrapper {
+      max-width: 1000px; margin: 50px auto; padding: 0 24px;
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 30px;
     }
 
-    .contact-section {
-      padding: 50px 20px;
-      max-width: 800px;
-      margin: auto;
-      margin-top: 40px;
+    .contact-info { display: flex; flex-direction: column; gap: 20px; }
+    .info-card {
+      background: var(--white); border-radius: 16px; padding: 24px;
+      box-shadow: var(--shadow); display: flex; gap: 16px; align-items: flex-start;
     }
-
-    .contact-section h2 {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      color: #a4788e;
+    .info-icon {
+      width: 46px; height: 46px; background: var(--rose-pale); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose); font-size: 1.1rem; flex-shrink: 0;
     }
+    .info-card h4 { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+    .info-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+    .info-card a { color: var(--rose); text-decoration: none; }
 
-    .contact-section p {
-      text-align: center;
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      color: #b58395;
+    .contact-form-card {
+      background: var(--white); border-radius: 20px; padding: 36px;
+      box-shadow: var(--shadow);
     }
-
-    .contact-note {
-      text-align: center;
-      font-size: 0.95rem;
-      color: #a4788e;
-      margin-bottom: 30px;
+    .contact-form-card h2 {
+      font-family: 'Playfair Display', serif; font-size: 1.5rem;
+      color: var(--text-dark); margin-bottom: 24px;
     }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-mid); margin-bottom: 7px; }
+    .input-wrap { position: relative; }
+    .input-wrap i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-light); font-size: 0.85rem; }
+    .input-wrap.ta-wrap i { top: 14px; transform: none; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 11px 13px 11px 38px;
+      border: 2px solid #f0e0e5; border-radius: 10px;
+      font-size: 0.92rem; font-family: 'Poppins', sans-serif;
+      color: var(--text-dark); background: var(--cream); transition: border-color 0.25s;
     }
-
-.contact-form input,
-.contact-form textarea {
-  padding: 15px;
-  border: 1px solid #f2c9d5;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-family: 'Segoe UI', sans-serif; /* Ensure input uses your main font */
-  background: #fffdfc;
-  color: #a4788e;
-  resize: vertical;
-}
-
-/* Placeholder style fix */
-::placeholder {
-  font-family: 'Segoe UI', sans-serif;
-  color: #c19bab;
-  font-size: 1rem;
-}
-
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      outline: none;
-      border-color: #e1a8bb;
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--rose);
+      box-shadow: 0 0 0 3px rgba(201,116,138,0.1); background: var(--white);
     }
-
-    .contact-form button {
-      padding: 12px;
-      background-color: #d9a3b3;
-      color: #fff9f3;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    .btn-send {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, var(--rose) 0%, #b5607a 100%);
+      color: var(--white); border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 600; font-family: 'Poppins', sans-serif;
+      cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 20px rgba(180,100,120,0.3);
     }
+    .btn-send:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(180,100,120,0.4); }
+    .alert { padding: 12px 16px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 16px; display: none; }
+    .alert-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+    .alert-error { background: #fde8ec; color: #9b2335; border: 1px solid #f5c0c8; }
 
-    .contact-form button:hover {
-      background-color: #c68ca2;
+    footer { background: var(--text-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 30px 20px; font-size: 0.88rem; margin-top: 60px; }
+    footer a { color: var(--rose-light); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .contact-wrapper { grid-template-columns: 1fr; }
+      .navbar { padding: 0 20px; }
+      .hamburger { display: block; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: var(--white); padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); gap: 4px; }
+      .nav-links.open { display: flex; }
     }
-
-    .direct-contact {
-      text-align: center;
-      margin-top: 25px;
-      font-size: 0.95rem;
-      color: #a4788e;
-    }
-
-    .direct-contact span {
-      display: block;
-      margin-top: 5px;
-      font-weight: 600;
-    }
-
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .contact-section {
-    padding: 40px 15px;
-    min-height: 100vh; /* takes full screen */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* vertical centering */
-  }
-
-  .contact-section h2 {
-    font-size: 2rem;
-  }
-}
   </style>
 </head>
 <body>
-
-  <!-- Navigation Bar -->
   <nav class="navbar">
-    <div class="logo2">
-      <img src="logo.png" alt="Threaded by Heart Logo">
-    </div>
+    <div class="logo2"><img src="logo.png" alt="Threaded by Heart"></div>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <i class="fas fa-bars"></i>
+    </button>
     <ul class="nav-links">
       <li><a href="home.html">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
-      <li><a href="cart.html">Cart</a></li>
-      <li><a href="checkout.html">Checkout</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-bag"></i> Cart</a></li>
       <li><a href="aboutus.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- Contact Section -->
-  <section class="contact-section">
-    <h2>Get in Touch</h2>
-    <p>We'd love to hear from you!</p>
-    <div class="contact-note">
-      This form is for general inquiries and messages.  
-      If you've placed an order, please use the contact information below for any updates or questions.
-    </div>
-    <form class="contact-form" id="contactForm">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+  <div class="page-header">
+    <h1>Get in Touch</h1>
+    <p>We'd love to hear from you</p>
+  </div>
 
-    <div class="direct-contact">
-      Prefer direct contact? Reach us at:
-      <span>Instagram:@threaded_by_heart</span>
-      <span>Location:Suart,Gujarat</span>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <div class="info-card">
+        <div class="info-icon"><i class="fab fa-instagram"></i></div>
+        <div>
+          <h4>Instagram</h4>
+          <p><a href="https://instagram.com/threaded_by_heart" target="_blank">@threaded_by_heart</a></p>
+          <p>DM us for custom orders</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div>
+          <h4>Location</h4>
+          <p>Surat, Gujarat, India</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fas fa-clock"></i></div>
+        <div>
+          <h4>Response Time</h4>
+          <p>We typically reply within 24 hours</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fas fa-truck"></i></div>
+        <div>
+          <h4>Shipping</h4>
+          <p>Pan India delivery available. Custom orders welcome.</p>
+        </div>
+      </div>
     </div>
-  </section>
+
+    <div class="contact-form-card">
+      <h2>Send a Message</h2>
+      <div id="alertSuccess" class="alert alert-success"></div>
+      <div id="alertError" class="alert alert-error"></div>
+      <form id="contactForm">
+        <div class="form-group">
+          <label>Your Name</label>
+          <div class="input-wrap"><i class="fas fa-user"></i>
+            <input type="text" name="name" placeholder="Your full name" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <div class="input-wrap"><i class="fas fa-envelope"></i>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <div class="input-wrap ta-wrap"><i class="fas fa-comment"></i>
+            <textarea name="message" placeholder="Tell us about your inquiry or custom order..." required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-send"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Threaded by Heart · Made with ❤️ in Surat, Gujarat · <a href="contact.html">Contact Us</a></p>
+  </footer>
 
   <script>
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      
-      const formData = {
-        name: this.name.value.trim(),
-        email: this.email.value.trim(),
-        message: this.message.value.trim()
-      };
-
+      const okDiv = document.getElementById('alertSuccess');
+      const errDiv = document.getElementById('alertError');
+      okDiv.style.display = 'none'; errDiv.style.display = 'none';
       try {
-        const response = await fetch('http://localhost:5000/submit_contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
+        const res = await fetch('http://localhost:5000/submit_contact', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: this.name.value.trim(), email: this.email.value.trim(), message: this.message.value.trim() })
         });
-
-        const data = await response.json();
-
+        const data = await res.json();
         if (data.status === 'success') {
-          alert('Thank you for your message! We will get back to you soon.');
-          this.reset(); // Clear the form
+          okDiv.textContent = 'Message sent! We\'ll get back to you soon.'; okDiv.style.display = 'block';
+          this.reset();
         } else {
-          alert('Error: ' + (data.message || 'Failed to send message. Please try again.'));
+          errDiv.textContent = data.message || 'Failed to send. Please try again.'; errDiv.style.display = 'block';
         }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to connect to server. Please try again later.');
+      } catch {
+        errDiv.textContent = 'Network error. Please try again.'; errDiv.style.display = 'block';
       }
     });
   </script>
