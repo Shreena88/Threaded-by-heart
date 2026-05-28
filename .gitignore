@@ -42,3 +42,6 @@ Thumbs.db
 .env
 __pycache__/
 *.pyc
+
+# Flask Session Cache
+flask_session/
